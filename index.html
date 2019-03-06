@@ -3,15 +3,29 @@
     <head>
         <meta charset="utf-8">
         <script src="jquery-3.3.1.min.js"></script>
-
+        <script src="miners.js"></script>
         <title>Programist Clicker</title>
     </head>
     <body>
         <H1>Site in developement</H1>
 
-        <p id="score"> 0 </p>
+        <div class="handclicking">
+            <p id="score"> 0 </p>
+            <button id="increment"> Click me </button>
+        </div>
 
-        <button id="increment"> Click me </button>
+        <div class="upgrades">
+            <div class="miner" id="miner0">
+                <p>#1 : <span class="ammount">0</span></p>
+                <button> buy new </button>
+            </div>
+            <div class="miner" id="miner1">
+                <p>#2 : <span class="ammount">0</span></p>
+                <button> buy new </button>
+            </div>
+        </div>
+
+
         <script src="main.js"></script>
     </body>
 </html>
