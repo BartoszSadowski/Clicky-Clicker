@@ -1,0 +1,37 @@
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.wrapper > * {
+    flex: 1 100%;
+}
+
+.wrapper div {
+    border: 1px solid black;
+    margin: 10px;
+}
+
+@media all and (min-width: 600px) {
+    .handclicking {
+        flex: 1;
+    }
+
+    .upgrades {
+        flex: 2;
+    }
+}
+
+
+.upgrades button{
+    margin: 1%;
+    width: 98%;
+}
+
+#score {
+    margin-left: 25px;
+}
+
+#increment {
+    margin: 10px;
+}
