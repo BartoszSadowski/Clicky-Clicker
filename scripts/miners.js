@@ -1,7 +1,8 @@
 class Miner{
-    constructor(digperunit){
+    constructor(digperunit, cost){
         this.units = 0;
         this.dpu = digperunit;
+        this.cost = cost;
     }
 
     getIncome(){
@@ -10,5 +11,6 @@ class Miner{
 
     buyMe(){
         this.units++;
+        this.cost = Math.ceil(Math.pow(this.cost, 1.05));
     }
 }
