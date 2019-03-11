@@ -8,7 +8,6 @@
 }
 
 .wrapper div {
-    border: 1px solid black;
     margin: 10px;
 }
 
@@ -22,16 +21,23 @@
     }
 }
 
+.upgrades {
+    border: solid 1px;
+}
 
 .upgrades button{
     margin: 1%;
     width: 98%;
 }
 
-#score {
-    margin-left: 25px;
+.handclicking {
+    display:flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #increment {
-    margin: 10px;
+    height: 50px;
+    width: 200px;
 }
