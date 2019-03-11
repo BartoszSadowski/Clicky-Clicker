@@ -1,6 +1,6 @@
 class Miner{
-    constructor(digperunit, cost){
-        this.units = 0;
+    constructor(units, digperunit, cost){
+        this.units = units;
         this.dpu = digperunit;
         this.cost = cost;
     }
