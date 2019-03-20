@@ -1,10 +1,10 @@
-let dpu = [1, 5]; //initial dig per miner for next indexes of miners
-let cost = [10, 100]; //initial costs for buying new miner
+let dpu = [1, 5, 15, 50]; //initial dig per miner for next indexes of miners
+let cost = [10, 100, 1000, 10000]; //initial costs for buying new miner
 
 let ps = { //player state
     score: 0, //how much money
     power: 1, //how much do I get on click of buttons
-    numberOfMiners: 2, //how many minersfields there are
+    numberOfMiners: 4, //how many minersfields there are
     miners: [], //miners list
     gps: 0, //gain per second
 };
@@ -24,11 +24,19 @@ if(localStorage.getItem('playerstate')!=null) {  //checking if previous state ex
     }
 }
 
+updateClickPower(0);
+
 //showing updated values on buttons
 function updateMiners(id) {
     $("#miner"+id).find(".ammount").text(ps.miners[id].units); //updating units shown to player
     $("#miner"+id).find(".cost").text(ps.miners[id].cost); //updating cost shown to player
     $("#miner"+id).find(".income").text(ps.miners[id].getIncome()); //updating income shown to player
+}
+
+//power update
+function updateClickPower(ammount){
+    ps.power=ps.power+ammount;
+    $("#gpc").text(ps.power);
 }
 
 //handling mining by hand
