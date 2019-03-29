@@ -5,7 +5,7 @@ class Miner{
         this.cost = cost;
     }
 
-    getIncome(){
+    get getIncome(){
         return(this.units*this.dpu)
     }
 
