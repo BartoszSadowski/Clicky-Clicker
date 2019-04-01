@@ -1,6 +1,7 @@
 class Upgrade{
-    constructor(cost){
-        this.bought=false;
+    constructor(bought ,name, cost, id){
+        this.bought=bought;
+        this.name=name;
         this.cost=cost;
         this.id=Upgrade.count;
         Upgrade.count++;
@@ -17,21 +18,9 @@ class Upgrade{
 
 Upgrade.count=0;
 
-class CharUpgrade extends Upgrade{
-    constructor(cost, powerGain){
-        super(cost);
-        this.powerGain=powerGain;
-    }
-
-    buyMe(){
-        super.buyMe();
-        return this.powerGain;
-    }
-}
-
 class MinersUpgrade extends Upgrade{
-    constructor(cost, targetAmmountPairs){
-        super(cost);
+    constructor(bought, name, cost, id, targetAmmountPairs){
+        super(bought, name, cost, id);
         this.targetAmmountPairs=targetAmmountPairs;
     }
 

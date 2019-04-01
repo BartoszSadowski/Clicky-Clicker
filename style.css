@@ -48,6 +48,23 @@
     margin: 5px;
 }
 
+.upgradesList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.upgrade {
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    margin: 5px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media all and (max-width: 600px) {
     .wrapper {
         grid-template-columns: repeat(1, 1fr);
