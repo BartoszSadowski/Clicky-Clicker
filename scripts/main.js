@@ -1,3 +1,57 @@
+class Miner{
+    constructor(units, digperunit, cost){
+        this.units = units;
+        this.dpu = +digperunit;
+        this.cost = cost;
+    }
+
+    newDpu(dpuN){
+        this.dpu = this.dpu + dpuN;
+        return this.dpu;
+    }
+
+    get getIncome(){
+        return(this.units * this.dpu)
+    }
+
+    buyMe(){
+        this.units++;
+        this.cost = Math.ceil(Math.pow(this.cost, 1.05));
+    }
+}
+
+class Upgrade{
+    constructor(bought ,name, cost, id){
+        this.bought=bought;
+        this.name=name;
+        this.cost=cost;
+        this.id=Upgrade.count;
+        Upgrade.count++;
+    }
+
+    buyMe(){
+        this.bought=true;
+    }
+
+    static get COUNT(){
+        return Upgrade.count;
+    }
+}
+
+Upgrade.count=0;
+
+class MinersUpgrade extends Upgrade{
+    constructor(bought, name, cost, id, targetAmmountPairs){
+        super(bought, name, cost, id);
+        this.targetAmmountPairs=targetAmmountPairs;
+    }
+
+    buyMe(){
+        super.buyMe();
+        return this.targetAmmountPairs;
+    }
+}
+
 const initVM = {1:10, 5:100, 15: 1000, 50:10000}; //initial dig and cost for each miner
 const upgds = {First:[5, 0, {0: 1, 1:2}], Second:[200, 0, {2:1}], Third:[300, 0, {3:1}]}; //upgrades with structure name:[cost, {target: ammount}]
 
@@ -32,29 +86,36 @@ if(localStorage.getItem('playerstate')!=null) {  //checking if previous state ex
 }
 updateClickPower(0);
 
-console.log(ps.upgradez)
 
-//creating upgrades buttons
-for(let i=0; i<ps.upgradez.length; i++){
-    if(!ps.upgradez[i].bought){
-        $(".upgradesList").append(`
-            <button class=upgrade id=upgrade${i}>
-            ${ps.upgradez[i].cost}
+//showing upgrades buttons unbought
+function showBUpgrades(){
+    $(".upgrades > header").text("Upgrades to buy");
+    for(let i=0; i<ps.upgradez.length; i++){
+        if(!ps.upgradez[i].bought){
+            $(".upgradesList").append(`
+                <button class=upgrade id=upgrade${i}>
+                ${ps.upgradez[i].cost}
+                </button>
+            `);
+        }
+    }
+}
+showBUpgrades();
+
+
+//creating miners buttons
+function showMiners(){
+    for(let i=0; i<ps.miners.length; i++){
+        $(".mines").append(`
+            <button class="miner" id="miner${i}">
+            <p>#${i+1} : <span class="ammount">${ps.miners[i].units}</span></p>
+            <p>Total income: <span class="income">${ps.miners[i].getIncome}</span></p>
+            <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
             </button>
         `);
     }
 }
-
-//creating miners buttons
-for(let i=0; i<ps.miners.length; i++){
-    $(".mines").append(`
-        <button class="miner" id="miner${i}">
-        <p>#${i+1} : <span class="ammount">0</span></p>
-        <p>Total income: <span class="income">0</span></p>
-        <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
-        </button>
-    `);
-}
+showMiners();
 
 //showing updated values on buttons
 function updateMiners(id) {
@@ -96,7 +157,7 @@ $(".upgrade").click((event)=>{
                 updateMiners(id);
             }
         }
-
+        $("#upgrade"+id).remove();
     }
 });
 
