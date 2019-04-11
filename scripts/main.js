@@ -1,8 +1,10 @@
 class Miner{
-    constructor(units, digperunit, cost){
+    constructor(name, units, digperunit, cost, hText){
+        this.name = name;
         this.units = units;
         this.dpu = +digperunit;
         this.cost = cost;
+        this.hText = hText;
     }
 
     newDpu(dpuN){
@@ -21,11 +23,12 @@ class Miner{
 }
 
 class Upgrade{
-    constructor(bought ,name, cost, id){
+    constructor(bought ,name, cost, id, hText){
         this.bought=bought;
         this.name=name;
         this.cost=cost;
         this.id=Upgrade.count;
+        this.hText=hText;
         Upgrade.count++;
     }
 
@@ -41,8 +44,8 @@ class Upgrade{
 Upgrade.count=0;
 
 class MinersUpgrade extends Upgrade{
-    constructor(bought, name, cost, id, targetAmmountPairs){
-        super(bought, name, cost, id);
+    constructor(bought, name, cost, id, hText, targetAmmountPairs){
+        super(bought, name, cost, id, hText);
         this.targetAmmountPairs=targetAmmountPairs;
     }
 
@@ -52,8 +55,8 @@ class MinersUpgrade extends Upgrade{
     }
 }
 
-const initVM = {1:10, 5:100, 15: 1000, 50:10000}; //initial dig and cost for each miner
-const upgds = {First:[5, 0, {0: 1, 1:2}], Second:[200, 0, {2:1}], Third:[300, 0, {3:1}]}; //upgrades with structure name:[cost, {target: ammount}]
+const initVM = {1:["miner1", 0, 1, 10, "halo"], 2:["miner2", 0, 5, 100, "halo"], 3:["miner3", 0, 25, 500,"halo"], 4:["miner4",0, 50, 1000 ,"halo"]}; //initial dig and cost for each miner
+const upgds = {First:[5, 0, "some a little longer text just to see how it works", {0: 1, 1:2}], Second:[200, 0, "hover", {2:1}], Third:[300, 0, "hover", {3:1}]}; //upgrades with structure name:[cost, {target: ammount}]
 
 let ps = { //player state
     score: 0, //how much money
@@ -78,7 +81,7 @@ if(localStorage.getItem('playerstate')!=null) {  //checking if previous state ex
     }
 } else { //initialiting fresh miners
     for(let i = 0; i < ps.numberOfMiners; i++){
-        ps.miners[i]=new Miner(0, Object.keys(initVM)[i], Object.values(initVM)[i]);
+        ps.miners[i]=new Miner(...Object.values(initVM)[i]);
     }//loading upgrades into array
     for(let i = 0; i < Object.keys(upgds).length; i++){
         ps.upgradez.push(new MinersUpgrade(false ,Object.keys(upgds)[i], ...Object.values(upgds)[i]));
@@ -93,7 +96,7 @@ function showBUpgrades(){
     for(let i=0; i<ps.upgradez.length; i++){
         if(!ps.upgradez[i].bought){
             $(".upgradesList").append(`
-                <button class=upgrade id=upgrade${i}>
+                <button class="upgrade popup" id="upgrade${i}" data-popuptext="${ps.upgradez[i].hText}">
                 ${ps.upgradez[i].cost}
                 </button>
             `);
@@ -107,8 +110,8 @@ showBUpgrades();
 function showMiners(){
     for(let i=0; i<ps.miners.length; i++){
         $(".mines").append(`
-            <button class="miner" id="miner${i}">
-            <p>#${i+1} : <span class="ammount">${ps.miners[i].units}</span></p>
+            <button class="miner popup" id="miner${i}">
+            <p>${ps.miners[i].name} : <span class="ammount">${ps.miners[i].units}</span></p>
             <p>Total income: <span class="income">${ps.miners[i].getIncome}</span></p>
             <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
             </button>

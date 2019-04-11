@@ -27,6 +27,7 @@
     width: 98%;
     border-radius: 10px;
     background-color: #F5FFFA;
+    cursor:pointer;
 }
 
 .handclicking {
@@ -36,7 +37,6 @@
     align-items: center;
 
     grid-row: 1 / 2;
-
 }
 
 #increment {
@@ -64,6 +64,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: relative;
+    cursor:pointer;
+}
+
+.upgrade:after {
+  color: #eee;
+  content: attr(data-popuptext);
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 3px;
+  opacity: 0;
+  bottom: 45px;
+  left: -2px;
+  width: 100px;
+  position: absolute;
+  transition: 500ms ease;
+  white-space: pre-wrap;
+  max-height: 0;
+}
+
+.upgrade:hover:after {
+  opacity: 1;
+  max-height: 500px;
+  padding: .4em;
+  bottom: 50px;
 }
 
 @media all and (max-width: 600px) {
