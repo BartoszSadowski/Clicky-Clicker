@@ -1,3 +1,12 @@
+body {
+    background-image: url(rescources/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+
+}
+
 .wrapper {
     display: flex;
     flex-flow: row wrap;
