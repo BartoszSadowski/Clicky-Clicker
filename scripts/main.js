@@ -92,12 +92,11 @@ updateClickPower(0);
 
 //showing upgrades buttons unbought
 function showBUpgrades(){
-    $(".upgrades > header").text("Upgrades to buy");
     for(let i=0; i<ps.upgradez.length; i++){
         if(!ps.upgradez[i].bought){
-            $(".upgradesList").append(`
-                <button class="upgrade popup" id="upgrade${i}" data-popuptext="${ps.upgradez[i].hText}">
-                ${ps.upgradez[i].cost}
+            $(".upgrade_area__list").append(`
+                <button class="upgrade_area__button" id="upgrade${i}" data-popuptext="${ps.upgradez[i].hText}">
+                    ${ps.upgradez[i].cost}
                 </button>
             `);
         }
@@ -109,11 +108,11 @@ showBUpgrades();
 //creating miners buttons
 function showMiners(){
     for(let i=0; i<ps.miners.length; i++){
-        $(".mines").append(`
-            <button class="miner popup" id="miner${i}">
-            <p>${ps.miners[i].name} : <span class="ammount">${ps.miners[i].units}</span></p>
-            <p>Total income: <span class="income">${ps.miners[i].getIncome}</span></p>
-            <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
+        $(".miners_area").append(`
+            <button class="miners_area__button" id="miner${i}">
+                <p>${ps.miners[i].name} : <span class="ammount">${ps.miners[i].units}</span></p>
+                <p>Total income: <span class="income">${ps.miners[i].getIncome}</span></p>
+                <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
             </button>
         `);
     }
@@ -146,7 +145,7 @@ function upScore(ammount){
 }
 
 //handling upgrades buying
-$(".upgrade").click((event)=>{
+$(".upgrade_area__button").click((event)=>{
     id = +($(event.currentTarget).attr("id").substring(7));
     if(ps.score >= ps.upgradez[id].cost){
         upScore(-ps.upgradez[id].cost);
@@ -165,7 +164,7 @@ $(".upgrade").click((event)=>{
 });
 
 //handling miners buying
-$(".miner").click((event)=>{
+$(".miners_area__button").click((event)=>{
     id = +($(event.currentTarget).attr("id").substring(5));
     if(ps.score >= ps.miners[id].cost){ //chceking if you have enough of money
         upScore(-ps.miners[id].cost);

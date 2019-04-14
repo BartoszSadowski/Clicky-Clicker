@@ -7,30 +7,27 @@
         <title>Programist Clicker</title>
     </head>
     <body>
-        <header class="pageName">
-            Site in developement
-        </header>
-        <div class="wrapper">
-            <div class="handclicking">
+        <section class="game_area">
+            <section class="clicking_area">
                 <p id="score"> 0 </p>
-                <button id="increment"> Click me </button>
-                <p class="hcp">Gain/second : <span id="gps">0</span></p>
-                <p class="hcp">Gain/click : <span id="gpc">0</span></p>
-            </div>
+                <button class="clicking_area__button" id="increment"> Click me </button>
+                <p class="clicking_area__paragraph--gain">Gain/second : <span id="gps">0</span></p>
+                <p class="clicking_area__paragraph--gain">Gain/click : <span id="gpc">0</span></p>
+            </section>
 
-            <div class="upgrades">
+            <section class="upgrade_area">
                 <header>
                     Upgrades to buy
-                </Header>
-                <div class=upgradesList></div>
-            </div>
+                </header>
+                <div class=upgrade_area__list></div>
+            </section>
 
-            <div class="mines">
+            <section class="miners_area">
                 <header>
                     Your miners
                 </header>
-            </div>
-        </div>
+            </section>
+        </section>
 
         <script src="scripts/jquery-3.3.1.min.js"></script>
         <script src="scripts/main.js"></script>
