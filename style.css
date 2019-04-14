@@ -4,6 +4,7 @@ body {
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .game_area {
@@ -14,6 +15,15 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
     grid-auto-rows: minmax(100px, auto);
+}
+
+.area {
+    border: 2px solid rgb(0,100,0);
+    border-radius: 20px;
+    background-color: rgba(240,255,240, 0.9);
+    padding: 10px;
+    margin: 20px;
+    box-shadow: 10px 15px rgba(47,79,79, 0.5);
 }
 
 .clicking_area {
@@ -95,7 +105,24 @@ body {
     border-radius: 10px;
     background-color: #F5FFFA;
     cursor:pointer;
+
+    display: flex;
+    justify-content: center;
 }
+
+.miners_button__image{
+    width: 100px;
+    height: 100px;
+
+    padding: 0 20px;
+
+}
+
+.miners_button__text {
+    margin: 0 auto;
+}
+
+
 
 @media all and (max-width: 600px) {
     .game_area {

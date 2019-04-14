@@ -1,10 +1,11 @@
 class Miner{
-    constructor(name, units, digperunit, cost, hText){
+    constructor(name, units, digperunit, cost, hText, image){
         this.name = name;
         this.units = units;
         this.dpu = +digperunit;
         this.cost = cost;
         this.hText = hText;
+        this.image = image;
     }
 
     newDpu(dpuN){
@@ -55,8 +56,20 @@ class MinersUpgrade extends Upgrade{
     }
 }
 
-const initVM = {1:["miner1", 0, 1, 10, "halo"], 2:["miner2", 0, 5, 100, "halo"], 3:["miner3", 0, 25, 500,"halo"], 4:["miner4",0, 50, 1000 ,"halo"]}; //initial dig and cost for each miner
-const upgds = {First:[5, 0, "some a little longer text just to see how it works", {0: 1, 1:2}], Second:[200, 0, "hover", {2:1}], Third:[300, 0, "hover", {3:1}]}; //upgrades with structure name:[cost, {target: ammount}]
+//initial dig and cost for each miner
+const initVM = {
+    1:["Cookies", 0, 1, 10, "halo", "rescources/cookie.jpg"], 
+    2:["miner2", 0, 5, 100, "halo", "rescources/cookie.jpg"], 
+    3:["miner3", 0, 25, 500,"halo", "rescources/cookie.jpg"], 
+    4:["miner4",0, 50, 1000 ,"halo", "rescources/cookie.jpg"]
+};
+
+//upgrades with structure name:[cost, {target: ammount}]
+const upgds = {
+    First:[5, 0, "some a little longer text just to see how it works", {0: 1, 1:2}],
+    Second:[200, 0, "hover", {2:1}],
+    Third:[300, 0, "hover", {3:1}]
+}; 
 
 let ps = { //player state
     score: 0, //how much money
@@ -110,9 +123,12 @@ function showMiners(){
     for(let i=0; i<ps.miners.length; i++){
         $(".miners_area").append(`
             <button class="miners_area__button" id="miner${i}">
-                <p>${ps.miners[i].name} : <span class="ammount">${ps.miners[i].units}</span></p>
-                <p>Total income: <span class="income">${ps.miners[i].getIncome}</span></p>
-                <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
+                <img class="miners_button__image" src=${ps.miners[i].image}>
+                <div class="miners_button__text">
+                    <p>${ps.miners[i].name} : <span class="ammount">${ps.miners[i].units}</span></p>
+                    <p>Total income: <span class="income">${ps.miners[i].getIncome}</span></p>
+                    <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
+                </d
             </button>
         `);
     }
