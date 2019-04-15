@@ -55,9 +55,9 @@ Upgrade.count=0;
 //initial dig and cost for each miner
 const initVM = {
     1:["Cookies", 10, "halo", 0, 1, "rescources/cookie.jpg"], 
-    2:["miner2", 100, "halo", 0, 10, "rescources/cookie.jpg"], 
-    3:["miner3", 500, "halo", 0, 50, "rescources/cookie.jpg"], 
-    4:["miner4", 1000, "halo", 0, 100, "rescources/cookie.jpg"]
+    2:["Money", 100, "halo", 0, 5, "rescources/money.png"], 
+    3:["Hero", 500, "halo", 0, 20, "rescources/sword.png"], 
+    4:["Paperclip", 1000, "halo", 0, 50, "rescources/paperclip.png"]
 };
 
 //upgrades with structure name:[cost, {target: ammount}]
@@ -119,10 +119,10 @@ showBUpgrades();
 function showMiners(){
     for(let i=0; i<ps.miners.length; i++){
         $(".miners_area").append(`
-            <button class="miners_area__button" id="miner${i}">
+            <button class="miners_area__button" id="miner${i}" data-popuptext="${ps.miners[i].hText}">
                 <img class="miners_button__image" src=${ps.miners[i].image}>
                 <div class="miners_button__text">
-                    <p>${ps.miners[i].name} : <span class="ammount">${ps.miners[i].units}</span></p>
+                    <p>${ps.miners[i].name}: <span class="ammount">${ps.miners[i].units}</span></p>
                     <p>Total income: <span class="income">${ps.miners[i].getIncome}</span></p>
                     <p>Buy new: <span class="cost">${ps.miners[i].cost}<span></p>
                 </d

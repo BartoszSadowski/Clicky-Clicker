@@ -108,7 +108,30 @@ body {
 
     display: flex;
     justify-content: center;
+    position: relative;
 }
+
+.miners_area__button:after {
+    color: #eee;
+    content: attr(data-popuptext);
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    opacity: 0;
+    right: -2px;
+    width: 150px;
+    height: 78%;
+    position: absolute;
+    transition: 500ms ease;
+    white-space: pre-wrap;
+    max-height: 0;
+  }
+  
+  .miners_area__button:hover:after {
+    opacity: 1;
+    max-height: 500px;
+    padding: .4em;
+    margin: 5px;
+  }
 
 .miners_button__image{
     width: 100px;
@@ -124,7 +147,7 @@ body {
 
 
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 640px) {
     .game_area {
         grid-template-columns: repeat(1, 1fr);
     }
@@ -142,5 +165,11 @@ body {
     .miners_area {
         grid-row: 2 / 3;
         grid-column: 1 / 2;
+    }
+
+    .miners_area__button:after{
+        right: 0px;
+        left: 0px;
+        width: initial;
     }
 }
