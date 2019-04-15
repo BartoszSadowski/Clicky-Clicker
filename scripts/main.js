@@ -1,10 +1,17 @@
-class Miner{
-    constructor(name, units, digperunit, cost, hText, image){
+//Declaring classes
+class Block {
+    constructor(name, cost, hText){
         this.name = name;
-        this.units = units;
-        this.dpu = +digperunit;
         this.cost = cost;
         this.hText = hText;
+    }
+}
+
+class Miner extends Block {
+    constructor(name, cost, hText, units, digperunit, image){
+        super(name, cost, hText);
+        this.units = units;
+        this.dpu = +digperunit;
         this.image = image;
     }
 
@@ -23,53 +30,43 @@ class Miner{
     }
 }
 
-class Upgrade{
-    constructor(bought ,name, cost, id, hText){
-        this.bought=bought;
-        this.name=name;
-        this.cost=cost;
-        this.id=Upgrade.count;
-        this.hText=hText;
+class Upgrade extends Block{
+    constructor(name, cost, hText, id, targetAmmountPairs, bought){
+        super(name, cost, hText);
+        this.id = Upgrade.count;
+        this.targetAmmountPairs=targetAmmountPairs;
+        this.bought = bought;
         Upgrade.count++;
     }
 
     buyMe(){
         this.bought=true;
+        return this.targetAmmountPairs;
     }
 
     static get COUNT(){
         return Upgrade.count;
     }
 }
-
 Upgrade.count=0;
+//End of declaring classes
 
-class MinersUpgrade extends Upgrade{
-    constructor(bought, name, cost, id, hText, targetAmmountPairs){
-        super(bought, name, cost, id, hText);
-        this.targetAmmountPairs=targetAmmountPairs;
-    }
-
-    buyMe(){
-        super.buyMe();
-        return this.targetAmmountPairs;
-    }
-}
-
+//Initial data
 //initial dig and cost for each miner
 const initVM = {
-    1:["Cookies", 0, 1, 10, "halo", "rescources/cookie.jpg"], 
-    2:["miner2", 0, 5, 100, "halo", "rescources/cookie.jpg"], 
-    3:["miner3", 0, 25, 500,"halo", "rescources/cookie.jpg"], 
-    4:["miner4",0, 50, 1000 ,"halo", "rescources/cookie.jpg"]
+    1:["Cookies", 10, "halo", 0, 1, "rescources/cookie.jpg"], 
+    2:["miner2", 100, "halo", 0, 10, "rescources/cookie.jpg"], 
+    3:["miner3", 500, "halo", 0, 50, "rescources/cookie.jpg"], 
+    4:["miner4", 1000, "halo", 0, 100, "rescources/cookie.jpg"]
 };
 
 //upgrades with structure name:[cost, {target: ammount}]
 const upgds = {
-    First:[5, 0, "some a little longer text just to see how it works", {0: 1, 1:2}],
-    Second:[200, 0, "hover", {2:1}],
-    Third:[300, 0, "hover", {3:1}]
+    First:[5, "some a little longer text just to see how it works", 0, {0: 1, 1:2}],
+    Second:[200, "hover", 0, {2:1}],
+    Third:[300, "hover", 0, {3:1}]
 }; 
+//End of initial data
 
 let ps = { //player state
     score: 0, //how much money
@@ -80,7 +77,7 @@ let ps = { //player state
     upgradez: [],
 };
 
-//initializing game
+//Begining of game initialization
 if(localStorage.getItem('playerstate')!=null) {  //checking if previous state exists
     ps=JSON.parse(localStorage.getItem('playerstate')); //parsing state into an object
     for(let i = 0; i < ps.numberOfMiners; i++){ //initializing Miners based on previous state
@@ -90,19 +87,20 @@ if(localStorage.getItem('playerstate')!=null) {  //checking if previous state ex
         setGps(ps.gps);
     }
     for(let i = 0; i < ps.upgradez.length; i++){
-        ps.upgradez[i]=new MinersUpgrade(...Object.values(ps.upgradez[i]))
+        ps.upgradez[i]=new Upgrade(...Object.values(ps.upgradez[i]))
     }
 } else { //initialiting fresh miners
     for(let i = 0; i < ps.numberOfMiners; i++){
         ps.miners[i]=new Miner(...Object.values(initVM)[i]);
     }//loading upgrades into array
     for(let i = 0; i < Object.keys(upgds).length; i++){
-        ps.upgradez.push(new MinersUpgrade(false ,Object.keys(upgds)[i], ...Object.values(upgds)[i]));
+        ps.upgradez.push(new Upgrade(Object.keys(upgds)[i], ...Object.values(upgds)[i], false));
     }
 }
 updateClickPower(0);
+//End of game initialization
 
-
+//HTML elements handling
 //showing upgrades buttons unbought
 function showBUpgrades(){
     for(let i=0; i<ps.upgradez.length; i++){
@@ -116,7 +114,6 @@ function showBUpgrades(){
     }
 }
 showBUpgrades();
-
 
 //creating miners buttons
 function showMiners(){
@@ -134,6 +131,7 @@ function showMiners(){
     }
 }
 showMiners();
+
 
 //showing updated values on buttons
 function updateMiners(id) {
@@ -159,7 +157,9 @@ function upScore(ammount){
     ps.score += ammount;
     $("#score").text(ps.score);
 }
+//End of HTML handling
 
+//Listeners
 //handling upgrades buying
 $(".upgrade_area__button").click((event)=>{
     id = +($(event.currentTarget).attr("id").substring(7));
@@ -191,6 +191,8 @@ $(".miners_area__button").click((event)=>{
 
 //handling mining by hand
 $("#increment").click(()=>{upScore(ps.power)});
+//End of listeners
+
 
 //handling mining by miners
 setInterval(() => {
