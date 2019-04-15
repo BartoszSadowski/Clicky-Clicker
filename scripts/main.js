@@ -26,7 +26,7 @@ class Miner extends Block {
 
     buyMe(){
         this.units++;
-        this.cost = Math.ceil(Math.pow(this.cost, 1.05));
+        this.cost = Math.ceil(Math.pow(this.cost, 1.1));
     }
 }
 
@@ -54,17 +54,32 @@ Upgrade.count=0;
 //Initial data
 //initial dig and cost for each miner
 const initVM = {
-    1:["Cookies", 10, "halo", 0, 1, "rescources/cookie.jpg"], 
-    2:["Money", 100, "halo", 0, 5, "rescources/money.png"], 
-    3:["Hero", 500, "halo", 0, 20, "rescources/sword.png"], 
-    4:["Paperclip", 1000, "halo", 0, 50, "rescources/paperclip.png"]
+    1:["Cookies", 10, "Mayby selling cookies will get us some clicks?", 0, 1, "rescources/cookie.jpg"], 
+    2:["Money", 100, "Ok, money will get us more clicks. I hope...", 0, 5, "rescources/money.png"], 
+    3:["Hero", 500, "Let's hire a hero. It'll get us on better foot.", 0, 20, "rescources/sword.png"], 
+    4:["Paperclip", 1000, "I heard a paperclips gets a lot of clicks.", 0, 50, "rescources/paperclip.png"]
 };
 
 //upgrades with structure name:[cost, {target: ammount}]
 const upgds = {
-    First:[5, "some a little longer text just to see how it works", 0, {0: 1, 1:2}],
-    Second:[200, "hover", 0, {2:1}],
-    Third:[300, "hover", 0, {3:1}]
+    1:[100, "Valuable cookies: \n This will get us 1 more clicks per cookie", 0, {1:1}],
+    2:[100, "I must click harder: \n This will power your click by 1", 0, {0:1}],
+    3:[200, "Money is everything: \n Money gives 5 more clicks per second", 0, {2:5}],
+    4:[500, "Click Power: \n Every click now is more powerful by 2", 0, {0:2}],
+    5:[1000, "You have my sword: \n Every hero clicks harder by 10 per second", 0, {3:10}],
+    6:[2000, "The paperclip: \n It holds paper even better and gives next 20 clicks per second", 0, {4:20}],
+    7:[3000, "Cookies of gold: \n This golden cookies gets us 3 more clicks per second", 0, {1:3}],
+    8:[4000, "Faster: \n This will power your click by 3", 0, {0:3}],
+    9:[5000, "Money can't buy you money: \n Money gives 10 more clicks per second", 0, {2:10}],
+    10:[6000, "And my bow: \n Every hero clicks harder by 15", 0, {3:15}],
+    11:[7000, "AI: \n AI loves paperclips and clicks 30 times for every single one of them", 0, {4:30}],
+    12:[8000, "Grandma: \n Lovely grandma bakes cookies with us. 10 clicks per cookie more", 0, {1:10}],
+    13:[9001, "It's over 9000: \n Everything gets 5/s click boost", 0, {0:5, 1:5, 2:5, 3:5, 4:5}],
+    14:[10000, "Must not click: \n Every idle miner gets 3/s click boost", 0, {1:3, 2:3, 3:3, 4:3}],
+    15:[10000, "What the hell: \n Your power grows by 3", 0, {0:3}],
+    16:[20000, "Are you still playing?: \n This upgrade gives you 1 power", 0, {0:1}],
+    17:[50000, "Really?: \n Cookies and paper clips gives 2 clicks more", 0, {1:2, 4:2}],
+    18:[90000, "Final goal: \n Are you happy now?", 0, {0:1000, 1:1000, 2:1000, 3:1000, 4:1000}],
 }; 
 //End of initial data
 
@@ -119,7 +134,7 @@ showBUpgrades();
 function showMiners(){
     for(let i=0; i<ps.miners.length; i++){
         $(".miners_area").append(`
-            <button class="miners_area__button" id="miner${i}" data-popuptext="${ps.miners[i].hText}">
+            <button class="miners_area__button" id="miner${i}" data-popuptext="${ps.miners[i].hText} \n \n It will get us ${ps.miners[i].dpu} click per second.">
                 <img class="miners_button__image" src=${ps.miners[i].image}>
                 <div class="miners_button__text">
                     <p>${ps.miners[i].name}: <span class="ammount">${ps.miners[i].units}</span></p>
@@ -138,6 +153,8 @@ function updateMiners(id) {
     $("#miner"+id).find(".ammount").text(ps.miners[id].units); //updating units shown to player
     $("#miner"+id).find(".cost").text(ps.miners[id].cost); //updating cost shown to player
     $("#miner"+id).find(".income").text(ps.miners[id].getIncome); //updating income shown to player
+    let popup = ps.miners[id].hText + "\n \n It will get us " + ps.miners[id].dpu + " click per second.";
+    $("#miner"+id).attr("data-popuptext", popup) //updating popup attribute
 }
 
 //power update
@@ -170,9 +187,9 @@ $(".upgrade_area__button").click((event)=>{
             if(pair[0]==0){
                 updateClickPower(pair[1]);
             }else{
-                id=pair[0]-1;
-                ps.miners[id].newDpu(pair[1]);
-                updateMiners(id);
+                ids=pair[0]-1;
+                ps.miners[ids].newDpu(pair[1]);
+                updateMiners(ids);
             }
         }
         $("#upgrade"+id).remove();
