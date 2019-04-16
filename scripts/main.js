@@ -129,7 +129,7 @@ function showBUpgrades(){
             `);
         }
     }
-    resteGame();
+    resetGame();
 }
 showBUpgrades();
 
@@ -151,13 +151,18 @@ function showMiners(){
 showMiners();
 
 //showing reset button after every update is bought
-function resteGame(){
+function resetGame(){
     if($.trim($(".upgrade_area__list").html())==''){
         $(".upgrade_area__list").append(`
-        <button class="upgrade_area__button upgrade_area__button--reset" id="reset" data-popuptext="This will reset your game permanently.">
-            Reset
-        </button>
-    `);
+            <button class="upgrade_area__button upgrade_area__button--reset" id="reset" data-popuptext="This will reset your game permanently.">
+                Reset
+            </button>
+        `);
+        //handling reset
+        $("#reset").click(()=>{
+            localStorage.clear();
+            window.location.reload(true);
+        });
     }
 }
 
@@ -207,7 +212,7 @@ $(".upgrade_area__button").click((event)=>{
             }
         }
         $("#upgrade"+id).remove();
-        resteGame();
+        resetGame();
     }
 });
 
@@ -224,11 +229,6 @@ $(".miners_area__button").click((event)=>{
 //handling mining by hand
 $("#increment").click(()=>{upScore(ps.power)});
 
-//handling reset
-$("#reset").click(()=>{
-    localStorage.clear();
-    window.location.reload(true);
-});
 //End of listeners
 
 
