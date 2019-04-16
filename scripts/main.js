@@ -92,6 +92,8 @@ let ps = { //player state
     upgradez: [],
 };
 
+const divide = 56; //how many times the score is calculated
+
 //Begining of game initialization
 if(localStorage.getItem('playerstate')!=null) {  //checking if previous state exists
     ps=JSON.parse(localStorage.getItem('playerstate')); //parsing state into an object
@@ -127,6 +129,7 @@ function showBUpgrades(){
             `);
         }
     }
+    resteGame();
 }
 showBUpgrades();
 
@@ -146,6 +149,17 @@ function showMiners(){
     }
 }
 showMiners();
+
+//showing reset button after every update is bought
+function resteGame(){
+    if($.trim($(".upgrade_area__list").html())==''){
+        $(".upgrade_area__list").append(`
+        <button class="upgrade_area__button upgrade_area__button--reset" id="reset" data-popuptext="This will reset your game permanently.">
+            Reset
+        </button>
+    `);
+    }
+}
 
 
 //showing updated values on buttons
@@ -172,7 +186,7 @@ function setGps(value){
 //adding some amount to score
 function upScore(ammount){
     ps.score += ammount;
-    $("#score").text(ps.score);
+    $("#score").text(Math.floor(ps.score));
 }
 //End of HTML handling
 
@@ -193,6 +207,7 @@ $(".upgrade_area__button").click((event)=>{
             }
         }
         $("#upgrade"+id).remove();
+        resteGame();
     }
 });
 
@@ -208,6 +223,12 @@ $(".miners_area__button").click((event)=>{
 
 //handling mining by hand
 $("#increment").click(()=>{upScore(ps.power)});
+
+//handling reset
+$("#reset").click(()=>{
+    localStorage.clear();
+    window.location.reload(true);
+});
 //End of listeners
 
 
@@ -217,9 +238,9 @@ setInterval(() => {
         for(let i = 0; i < ps.numberOfMiners; i++){
             income += ps.miners[i].getIncome;
         }
-        upScore(income);
+        upScore(income/divide);
         setGps(income);
-    }, 1000);
+    }, 1000/divide);
 
 //saving game
 setInterval(() => {

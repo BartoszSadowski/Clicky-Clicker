@@ -49,7 +49,7 @@ body {
 
 .upgrade_area {
     grid-row: 2 / 3;
-    height: 210px;
+    min-height: 210px;
 }
 
 .upgrade_area__list {
