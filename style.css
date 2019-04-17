@@ -7,6 +7,11 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#score{
+    font-size: 30px;
+    margin: 5px;
+}
+
 .game_area {
     display: flex;
     flex-flow: row wrap;
@@ -24,6 +29,11 @@ body {
     padding: 10px;
     margin: 20px;
     box-shadow: 10px 15px rgba(47,79,79, 0.5);
+}
+
+.area__header{
+    text-align: center;
+    font-size: 25px;
 }
 
 .clicking_area {
@@ -62,9 +72,10 @@ body {
 .upgrade_area__button {
     height: 50px;
     width: 50px;
-    border: 1px solid black;
+    border: 1px solid dimgray;
+    border-radius: 9px;
     margin: 5px;
-    background-color: white;
+    background-color: mintcream;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,7 +84,16 @@ body {
     cursor:pointer;
 }
 
-.upgrade_area__button:after {
+.upgrade_area__button:hover{
+    background-color: Ivory;
+    border: 2px inset LightGrey;
+}
+
+.upgrade_area__button--reset:hover{
+    background-color: MistyRose;
+}
+
+.upgrade_area__button::after {
   color: #eee;
   content: attr(data-popuptext);
   background: rgba(0, 0, 0, 0.6);
@@ -88,12 +108,13 @@ body {
   max-height: 0;
 }
 
-.upgrade_area__button:hover:after {
+.upgrade_area__button:hover::after {
   opacity: 1;
   max-height: 500px;
   padding: .4em;
   bottom: 50px;
 }
+
 
 .miners_area {
     grid-column: 2 / 4;
@@ -113,7 +134,12 @@ body {
     position: relative;
 }
 
-.miners_area__button:after {
+.miners_area__button:hover{
+    background-color: Seashell;
+    border: 2px inset lightgray;
+}
+
+.miners_area__button::after {
     color: #eee;
     content: attr(data-popuptext);
     background: rgba(0, 0, 0, 0.6);
@@ -128,7 +154,7 @@ body {
     max-height: 0;
   }
   
-  .miners_area__button:hover:after {
+  .miners_area__button:hover::after {
     opacity: 1;
     max-height: 500px;
     padding: .4em;
@@ -147,6 +173,106 @@ body {
     margin: 0 auto;
 }
 
+.confirm_box{
+    display: none;
+    background-color: mintcream;
+    border: 1px solid dimgray;
+    position: fixed;
+    left: 50%;
+    top: 1px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    width: 500px;
+    margin-left: -250px;
+
+    animation-name: slide;
+    animation-duration: .5s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes slide {
+    from {
+        top: -120px;
+    }
+
+    to {
+        top: 1px;
+    }
+}
+
+.confirm_box__button {
+    width:70px;
+    border: 1px solid dimgray;
+    background-color: LightGray;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 3px;
+}
+
+.confirm_box__button--yes:hover{
+    background-color: LightCoral;
+    animation-name:redish;
+    animation-duration: 1.5s;
+}
+
+@keyframes redish {
+    from {
+        background-color: LightGray;
+    }
+
+    to {
+        background-color: LightCoral;
+    }
+}
+
+.confirm_box__button--yes {
+    animation-name:redished;
+    animation-duration: 1.5s;
+}
+
+
+@keyframes redished {
+    from {
+        background-color: LightCoral;
+    }
+
+    to {
+        background-color: LightGray;
+    }
+}
+
+.confirm_box__button--no:hover{
+    background-color: PaleGreen;
+    animation-name:greenish;
+    animation-duration: 1.5s;
+}
+
+@keyframes greenish {
+    from{
+        background-color: LightGray; 
+    }
+    
+    to {
+        background-color: palegreen;
+    }
+}
+
+.confirm_box__button--no {
+    animation-name:greenished;
+    animation-duration: 1.5s;
+}
+
+@keyframes greenished {
+    from {
+        background-color: palegreen;
+    }
+
+    to {
+        background-color: lightgray;
+    }
+}
 
 
 @media all and (max-width: 640px) {
@@ -173,5 +299,11 @@ body {
         right: 0px;
         left: 0px;
         width: initial;
+    }
+
+    .confirm_box{
+        left:0;
+        margin:0;
+        width:100%;
     }
 }

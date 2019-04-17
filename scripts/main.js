@@ -159,13 +159,28 @@ function resetGame(){
             </button>
         `);
         //handling reset
-        $("#reset").click(()=>{
-            localStorage.clear();
-            window.location.reload(true);
+        $("#reset").click(()=>{ 
+            doConfirm("Are you sure? There will be no coming back from this.", (/*yes*/)=>{ 
+                localStorage.clear();
+                window.location.reload(true);
+            }, (/*no*/)=>{
+            });
         });
     }
 }
 
+//popup confirm box, based on anwsers here:
+"https://stackoverflow.com/questions/9334636/how-to-create-a-dialog-with-yes-and-no-options/30498126#30498126"
+function doConfirm(msg, yesF, noF){
+    let confirmBox = $(".confirm_box");
+    confirmBox.find(".confirm_box__message").text(msg);
+    confirmBox.find(".confirm_box__button--yes,.confirm_box__button--no").unbind().click( ()=>{
+        confirmBox.hide();
+    });
+    confirmBox.find(".confirm_box__button--yes").click(yesF); 
+    confirmBox.find(".confirm_box__button--no").click(noF);
+    confirmBox.show();
+}
 
 //showing updated values on buttons
 function updateMiners(id) {
@@ -227,7 +242,9 @@ $(".miners_area__button").click((event)=>{
 });
 
 //handling mining by hand
-$("#increment").click(()=>{upScore(ps.power)});
+$("#increment").click(()=>{
+    upScore(ps.power)
+});
 
 //End of listeners
 
