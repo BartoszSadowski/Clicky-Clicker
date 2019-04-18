@@ -280,7 +280,7 @@ body {
 }
 
 
-@media all and (max-width: 640px) {
+@media all and (max-width: 639px) {
     .game_area {
         grid-template-columns: repeat(1, 1fr);
     }
